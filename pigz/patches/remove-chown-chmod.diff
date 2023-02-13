@@ -1,0 +1,23 @@
+diff --git a/pigz.c b/pigz.c
+index 01e50e0..16933cc 100644
+--- a/pigz.c
++++ b/pigz.c
+@@ -3859,11 +3859,13 @@ local int copymeta(char *from, char *to) {
+     if (stat(from, &st) != 0 || (st.st_mode & S_IFMT) != S_IFREG)
+         return -4;
+
+-    // set to's mode bits, ignore errors
+-    int ret = chmod(to, st.st_mode & 07777);
+-
+-    // copy owner's user and group, ignore errors
+-    ret += chown(to, st.st_uid, st.st_gid);
++    // TODO: chown/chmod must be enabled in wasi-libc for this to work
++    // // set to's mode bits, ignore errors
++    // int ret = chmod(to, st.st_mode & 07777);
++    //
++    // // copy owner's user and group, ignore errors
++    // ret += chown(to, st.st_uid, st.st_gid);
++    int ret = 0;
+
+     // copy access and modify times, ignore errors
+     times[0].tv_sec = st.st_atime;

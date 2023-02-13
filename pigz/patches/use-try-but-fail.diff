@@ -1,0 +1,13 @@
+diff --git a/pigz.c b/pigz.c
+index 01e50e0..814af77 100644
+--- a/pigz.c
++++ b/pigz.c
+@@ -434,7 +436,7 @@
+                                             // ZopfliOptions
+ #endif
+
+-#include "try.h"        // try, catch, always, throw, drop, punt, ball_t
++#include "try-but-fail.h"        // try, catch, always, throw, drop, punt, ball_t
+
+ // For local functions and globals.
+ #define local static

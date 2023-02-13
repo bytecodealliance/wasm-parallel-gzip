@@ -1,0 +1,18 @@
+diff --git a/yarn.c b/yarn.c
+index e076258..0fa4bf8 100644
+--- a/yarn.c
++++ b/yarn.c
+@@ -312,9 +312,10 @@ thread *launch_(void (*probe)(void *), void *payload,
+     int ret = pthread_attr_init(&attr);
+     if (ret)
+         fail(ret, file, line, "attr_init");
+-    ret = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+-    if (ret)
+-        fail(ret, file, line, "attr_setdetachstate");
++    // TODO: pthread_attr_setdetachstate must be enabled in wasi-libc for this to work.
++    // ret = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
++    // if (ret)
++    //     fail(ret, file, line, "attr_setdetachstate");
+     ret = pthread_create(&(th->id), &attr, ignition, capsule);
+     if (ret)
+         fail(ret, file, line, "create");

@@ -1,0 +1,25 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  check:
+    name: Build and run benchmark
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        submodules: recursive
+    # Some GitHub runners may not have Rust v1.66.0, which is needed for the latest workspace
+    # changes to Wasmtime's Cargo.toml.
+    - name: Update Rust
+      run: rustup update
+    # Because of the special "install LLVM" task, we need to specify which tools to use.
+    - name: Build components
+      run: make
+    - name: Run benchmark
+      run: make benchmark

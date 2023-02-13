@@ -1,0 +1,9 @@
+[submodule "wasmtime/src"]
+	path = wasmtime/src
+	url = https://github.com/bytecodealliance/wasmtime
+[submodule "pigz/src"]
+	path = pigz/src
+	url = https://github.com/madler/pigz
+[submodule "zlib/src"]
+	path = zlib/src
+	url = https://github.com/madler/zlib

@@ -1,0 +1,36 @@
+diff --git a/pigz.c b/pigz.c
+index 01e50e0..814af77 100644
+--- a/pigz.c
++++ b/pigz.c
+@@ -358,7 +358,9 @@
+ #include <errno.h>      // errno, EEXIST
+ #include <assert.h>     // assert()
+ #include <time.h>       // ctime(), time(), time_t, mktime()
++#ifdef ALLOW_WASM_SIGNALS
+ #include <signal.h>     // signal(), SIGINT
++#endif
+ #include <sys/types.h>  // ssize_t
+ #include <sys/stat.h>   // chmod(), stat(), fstat(), lstat(), struct stat,
+                         // S_IFDIR, S_IFLNK, S_IFMT, S_IFREG
+@@ -923,9 +925,11 @@ local void log_dump(void) {
+
+ // Abort or catch termination signal.
+ local void cut_short(int sig) {
++#ifdef ALLOW_WASM_SIGNALS
+     if (sig == SIGINT) {
+         Trace(("termination by user"));
+     }
++#endif
+     if (g.outd != -1 && g.outd != 1) {
+         unlink(g.outf);
+         RELEASE(g.outf);
+@@ -4621,7 +4625,9 @@ int main(int argc, char **argv) {
+         g.prog = *p ? p : "pigz";
+
+         // prepare for interrupts and logging
++#ifdef ALLOW_WASM_SIGNALS
+         signal(SIGINT, cut_short);
++#endif
+ #ifndef NOTHREAD
+         yarn_prefix = g.prog;           // prefix for yarn error messages
+         yarn_abort = cut_yarn;          // call on thread error
