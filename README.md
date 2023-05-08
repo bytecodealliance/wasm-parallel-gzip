@@ -3,8 +3,9 @@ wasm-parallel-gzip
 
 This project demonstrates how to build and run parallel compression using WebAssembly and
 [wasi-threads]. It compiles the [pigz] CLI tool to WebAssembly using a [wasi-sdk] pre-release and
-runs it using a recent version of [wasmtime]. At the moment, wasi-threads is still [experimental];
-though its ABI is unstable, this demo motivates the need for spawning threads in WebAssembly.
+runs it using a recent version of [wasmtime] (and optionally, [wamr]). At the moment, wasi-threads
+is still [experimental]; though its ABI is unstable, this demo motivates the need for spawning
+threads in WebAssembly.
 
 [experimental]: https://github.com/WebAssembly/wasi-threads/issues/10
 [wasi-threads]: https://github.com/WebAssembly/wasi-threads
@@ -39,7 +40,8 @@ tool:
 [wasi-sdk]: wasi-sdk
 [wasmtime]: wasmtime
 [zlib]: zlib
-[release]: https://github.com/WebAssembly/wasi-sdk/releases/tag/wasi-sdk-20%2Bthreads
+[wamr]: wasm-micro-runtime
+[release]: https://github.com/WebAssembly/wasi-sdk/releases/tag/wasi-sdk-20
 
 ### Run
 
@@ -48,6 +50,15 @@ make benchmark
 ```
 
 Run parallel compression (by default, `NUM_THREADS=1`) on a randomly-generated file.
+
+### Running benchmarks using WASM micro runtime
+`make benchmark` command uses Wasmtime engine to run the benchmark. Use the following
+command to build WASM micro runtime (for linux platform) and run benchmarks (in the fast
+interpreter mode):
+
+```
+make benchmark.wamr WAMR_PLATFORM=linux
+```
 
 ### TODO
 

@@ -21,5 +21,7 @@ jobs:
     # Because of the special "install LLVM" task, we need to specify which tools to use.
     - name: Build components
       run: make
-    - name: Run benchmark
+    - name: Run benchmark - Wasmtime
       run: make benchmark
+    - name: Run benchmark - WAMR
+      run: make benchmark.wamr

@@ -7,3 +7,6 @@
 [submodule "zlib/src"]
 	path = zlib/src
 	url = https://github.com/madler/zlib
+[submodule "wasm-micro-runtime/src"]
+	path = wasm-micro-runtime/src
+	url = https://github.com/bytecodealliance/wasm-micro-runtime
