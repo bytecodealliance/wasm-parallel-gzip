@@ -4,6 +4,7 @@ ZLIB_WASM=zlib/libz.wasm.a
 WASI_SDK_CC=wasi-sdk/bin/clang
 WASMTIME=wasmtime/src/target/release/wasmtime
 WAMR=wasm-micro-runtime/src/build/iwasm
+PLATFORM?=linux
 
 # Compile and link the various WebAssembly objects and the Wasmtime engine to run them. Important
 # variables:
@@ -17,14 +18,11 @@ $(PIGZ_WASM): $(WASI_SDK_CC)
 $(ZLIB_WASM): $(WASI_SDK_CC)
 	make -C zlib
 $(WASI_SDK_CC):
-	make -C wasi-sdk
+	make -C wasi-sdk PLATFORM=$(PLATFORM)
 $(WASMTIME):
 	make -C wasmtime
-
-# Compile WASM micro runtime. Configuration variables:
-# - WAMR_PLATFORM: modify the build platform for WASM micro runtime (default - linux).
 $(WAMR):
-	make -C wasm-micro-runtime
+	make -C wasm-micro-runtime PLATFORM=$(PLATFORM)
 
 clean:
 	make -C wasi-sdk clean
@@ -51,4 +49,4 @@ benchmark.wamr: random.bin $(PIGZ_WASM) $(WAMR)
 random.bin: random.original.bin
 	@cp $< $@
 random.original.bin:
-	head -c 100M </dev/urandom >$@
+	head -c 104857600 </dev/urandom >$@  # 100M

@@ -2,7 +2,7 @@ wasm-parallel-gzip
 ===================
 
 This project demonstrates how to build and run parallel compression using WebAssembly and
-[wasi-threads]. It compiles the [pigz] CLI tool to WebAssembly using a [wasi-sdk] pre-release and
+[wasi-threads]. It compiles the [pigz] CLI tool to WebAssembly using a [wasi-sdk] release and
 runs it using a recent version of [wasmtime] (and optionally, [wamr]). At the moment, wasi-threads
 is still [experimental]; though its ABI is unstable, this demo motivates the need for spawning
 threads in WebAssembly.
@@ -18,8 +18,9 @@ git clone --recurse-submodules ...
 
 The various source repositories are retrieved as Git submodules &mdash; these are all necessary for
 the build to succeed. Also, this project expects some basic Linux tools (`make`, `wget`, `git`,
-`tar`) as well as Rust. The specific Linux expectations are incidental to this sample code;
-contributions are welcome to make this sample work on other OSes.
+`tar`) as well as Rust. The specific Linux expectations are incidental to this sample code.
+For MacOS, `brew install wget gnu-tar` is necessary.
+Contributions are welcome to make this sample work on other OSes.
 
 ### Build
 
@@ -35,6 +36,7 @@ tool:
   WebAssembly version of it
 - [pigz]: the parallel compression library
 - [wasmtime]: a WebAssembly engine that implements wasi-threads
+- [WAMR]: a WebAssembly engine that implements wasi-threads
 
 [pigz]: pigz
 [wasi-sdk]: wasi-sdk
@@ -49,6 +51,7 @@ tool:
 make benchmark
 ```
 
+Default platform is Linux, use `make PLATFORM=macos` on MacOS.  
 Run parallel compression (by default, `NUM_THREADS=1`) on a randomly-generated file.
 
 ### Running benchmarks using WASM micro runtime
@@ -57,7 +60,7 @@ command to build WASM micro runtime (for linux platform) and run benchmarks (in 
 interpreter mode):
 
 ```
-make benchmark.wamr WAMR_PLATFORM=linux
+make benchmark.wamr
 ```
 
 ### TODO
