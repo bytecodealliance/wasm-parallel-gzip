@@ -1,4 +1,9 @@
-WAMR_PLATFORM?=linux
+PLATFORM?=linux
+
+WAMR_PLATFORM=linux
+ifeq ($(PLATFORM), macos)
+    WAMR_PLATFORM=darwin
+endif
 
 # Build WASM Micro Runtime.
 build/iwasm:

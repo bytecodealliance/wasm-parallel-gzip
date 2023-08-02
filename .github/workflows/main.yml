@@ -9,7 +9,14 @@ on:
 jobs:
   check:
     name: Build and run benchmark
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ 
+          {name: ubuntu-latest, build_platform: linux},
+          {name: macos-latest, build_platform: macos}
+        ]
+    runs-on: ${{ matrix.os.name }}
+
     steps:
     - uses: actions/checkout@v1
       with:
@@ -20,8 +27,8 @@ jobs:
       run: rustup update
     # Because of the special "install LLVM" task, we need to specify which tools to use.
     - name: Build components
-      run: make
+      run: make PLATFORM=${{ matrix.os.build_platform }}
     - name: Run benchmark - Wasmtime
       run: make benchmark
     - name: Run benchmark - WAMR
-      run: make benchmark.wamr
+      run: make benchmark.wamr PLATFORM=${{ matrix.os.build_platform }}
